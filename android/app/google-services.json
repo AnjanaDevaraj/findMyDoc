@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "194874909498",
+    "project_id": "findmydoc-d7a5f",
+    "storage_bucket": "findmydoc-d7a5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194874909498:android:efbbe4f2176e336d9ae603",
+        "android_client_info": {
+          "package_name": "com.anjana.findmydoc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiK-o3Qz55DXSmdqW6rPPdN0E2TNsYVPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
