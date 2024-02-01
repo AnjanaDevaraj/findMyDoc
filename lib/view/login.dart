@@ -2,14 +2,16 @@ import 'package:findmydoc/Utilities/appColors.dart';
 import 'package:findmydoc/view/home.dart';
 import 'package:findmydoc/view/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../Utilities/firebase_auth_Functions.dart';
+import '../utilities/appAssets.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
 
-  final email_controller = TextEditingController();
-  final pw_controller = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,15 @@ class Login extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              AppAssets.appLogo,
+              height: 50,
+              width: 50,
+            ),
+            SizedBox(height: 8,),
             Text(
               "Welcome!",
-              style: TextStyle(
+              style: GoogleFonts.inter(
                   color: AppColors.themeColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 22),
@@ -33,12 +41,12 @@ class Login extends StatelessWidget {
               style: TextStyle(color: AppColors.themeColor, fontSize: 16),
             ),
             SizedBox(
-              height: 12,
+              height: 20,
             ),
             Padding(
               padding: EdgeInsets.all(8),
               child: TextField(
-                controller: email_controller,
+                controller: emailController,
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: AppColors.themeColor),
                     hintText: "Email",
@@ -51,7 +59,7 @@ class Login extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8),
               child: TextField(
-                controller: pw_controller,
+                controller: passwordController,
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: AppColors.themeColor),
                     hintText: "Password",
@@ -76,8 +84,8 @@ class Login extends StatelessWidget {
                 onPressed: () {
                   FirebaseFunctions()
                       .loginUser(
-                          email: email_controller.text.trim(),
-                          pwd: pw_controller.text.trim())
+                          email: emailController.text.trim(),
+                          pwd: passwordController.text.trim())
                       .then((response) {
                     if (response == null) {
                       Navigator.of(context).pushReplacement(
@@ -88,7 +96,9 @@ class Login extends StatelessWidget {
                     }
                   });
                 },
-                shape: StadiumBorder(),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3),
+                ),
                 color: AppColors.themeColor,
                 child: Text(
                   'Login',
@@ -103,11 +113,12 @@ class Login extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Signup()));
                 },
                 child: RichText(
-                  text: TextSpan(text: 'Not a user?', children: [
+                  text: TextSpan(text: 'Not a user?', style: TextStyle(color: AppColors.themeColor), children: [
                     TextSpan(
                         text: "Signup",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: AppColors.themeColor,
                         ))
                   ]),
                 ))

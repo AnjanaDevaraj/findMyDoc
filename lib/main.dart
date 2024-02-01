@@ -1,6 +1,10 @@
 import 'dart:async';
 
+import 'package:findmydoc/utilities/appAssets.dart';
+import 'package:findmydoc/view/favourites.dart';
+import 'package:findmydoc/view/history.dart';
 import 'package:findmydoc/view/home.dart';
+import 'package:findmydoc/view/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +29,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: user == null ? SplashHome() : HomePage(),
+      routes: {
+        '/home': (context) => HomePage(),
+        '/favourites': (context) => Favourites(),
+        '/history': (context) => History(),
+        '/profile': (context) => ProfilePage(),
+      },
     );
   }
 }
@@ -54,7 +64,7 @@ class _SplashHomeState extends State<SplashHome> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/icons/splash_logo.png",
+              AppAssets.appLogo,
               height: 50,
               width: 50,
             ),
