@@ -90,6 +90,7 @@ class _SignupState extends State<Signup> {
               height: 8,
             ),
             MaterialButton(
+              height: 45,
                 onPressed: () {
                   // FirebaseFunctions()
                   //     .registerUser(
@@ -104,7 +105,7 @@ class _SignupState extends State<Signup> {
                   //         .showSnackBar(SnackBar(content: Text(response)));
                   //   }
                   // }
-                  //);
+                  // );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(3),

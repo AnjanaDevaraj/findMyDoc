@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utilities/bottomNavigation.dart';
+
 class History extends StatelessWidget {
   const History({super.key});
 
@@ -9,6 +11,7 @@ class History extends StatelessWidget {
       body: Center(
         child: Text("History"),
       ),
+      bottomNavigationBar: BottomNavigationWidget(),
     );
   }
 }

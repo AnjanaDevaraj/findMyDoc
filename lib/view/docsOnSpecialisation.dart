@@ -4,12 +4,15 @@ import '../Utilities/appColors.dart';
 import '../utilities/bottomNavigation.dart';
 import 'docProfile.dart';
 
-class Favourites extends StatefulWidget {
+class DocSpec extends StatefulWidget {
+
+  final String? name;
+  DocSpec({super.key, this.name});
   @override
-  State<Favourites> createState() => _FavouritesState();
+  State<DocSpec> createState() => _DocSpecState();
 }
 
-class _FavouritesState extends State<Favourites> {
+class _DocSpecState extends State<DocSpec> {
   List<Map<String, dynamic>> docList = [
     {
       'name': 'Dr.Jithin Jose',
@@ -48,7 +51,7 @@ class _FavouritesState extends State<Favourites> {
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12),
               child: Text(
-                "Favourites",
+                "${widget.name} near me",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
