@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utilities/appColors.dart';
-import '../Utilities/firebase_auth_Functions.dart';
+import '../firebase_files/firebase_auth_Functions.dart';
 import '../utilities/appAssets.dart';
 import 'home.dart';
 
@@ -17,6 +17,7 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
 
+  var is_PwdHidden = true;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
@@ -32,6 +33,7 @@ class _SignupState extends State<Signup> {
               AppAssets.appLogo,
               height: 50,
               width: 50,
+              color: AppColors.themeColor,
             ),
             SizedBox(height: 8,),
             Text(
@@ -51,39 +53,56 @@ class _SignupState extends State<Signup> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    hintStyle: TextStyle(color: AppColors.themeColor),
-                    hintText: "Name",
-                    border: OutlineInputBorder()),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.all(8),
+            //   child: TextField(
+            //     controller: nameController,
+            //     decoration: InputDecoration(
+            //         hintStyle: TextStyle(color: AppColors.themeColor),
+            //         hintText: "Name",
+            //         border: OutlineInputBorder()),
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(12),
               child: TextField(
                 controller: emailController,
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: AppColors.themeColor),
                     hintText: "Email",
-                    border: OutlineInputBorder()),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(26),
+                    )),
               ),
             ),
             SizedBox(
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(12),
               child: TextField(
+                obscureText: is_PwdHidden,
+                obscuringCharacter: '*',
                 controller: passwordController,
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: AppColors.themeColor),
                     hintText: "Password",
-                    border: OutlineInputBorder()),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(26),
+                    ),
+                  suffixIcon: IconButton(onPressed: (){
+                    setState(() {
+                      if(is_PwdHidden){
+                        is_PwdHidden = false;
+                      }else {
+                        is_PwdHidden = true;
+                      };
+                    });
+                  }, icon: Icon(
+                    is_PwdHidden == true? Icons.visibility_off: Icons.visibility,color: AppColors.themeColor,
+                  )),),
               ),
             ),
             SizedBox(
@@ -92,20 +111,20 @@ class _SignupState extends State<Signup> {
             MaterialButton(
               height: 45,
                 onPressed: () {
-                  // FirebaseFunctions()
-                  //     .registerUser(
-                  //     email: emailController.text.trim(),
-                  //     pwd: passwordController.text.trim())
-                  //     .then((response) {
-                  //   if (response == null) {
+                  FirebaseFunctions()
+                      .registerUser(
+                      email: emailController.text.trim(),
+                      pwd: passwordController.text.trim())
+                      .then((response) {
+                    if (response == null) {
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => HomePage(name: nameController.text)));
-                  //   } else {
-                  //     ScaffoldMessenger.of(context)
-                  //         .showSnackBar(SnackBar(content: Text(response)));
-                  //   }
-                  // }
-                  // );
+                    } else {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(response)));
+                    }
+                  }
+                  );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(3),

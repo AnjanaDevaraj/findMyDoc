@@ -46,12 +46,13 @@ class _FavouritesState extends State<Favourites> {
               height: 24,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12),
+              padding: const EdgeInsets.only(left: 12, right: 12,top: 20),
               child: Text(
                 "Favourites",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold
                 ),
               ),
             ),

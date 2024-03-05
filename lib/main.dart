@@ -8,32 +8,38 @@ import 'package:findmydoc/view/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'view/login.dart';
 
-void main() async{
+void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: FirebaseOptions(
           apiKey: "AIzaSyCiK-o3Qz55DXSmdqW6rPPdN0E2TNsYVPI",
           appId: "1:194874909498:android:efbbe4f2176e336d9ae603",
           messagingSenderId: "",
-          projectId: "findmydoc-d7a5f"));
+          projectId: "findmydoc-d7a5f",
+          storageBucket: "findmydoc-d7a5f.appspot.com"));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: user == null ? SplashHome() : HomePage(),
+      home:
+      //user == null ?
+      SplashHome(),
+      //: HomePage(),
       routes: {
         '/home': (context) => HomePage(),
         '/favourites': (context) => Favourites(),
         '/history': (context) => History(),
         '/profile': (context) => ProfilePage(),
+        '/login': (context) => Login(),
       },
     );
   }
@@ -47,11 +53,17 @@ class SplashHome extends StatefulWidget {
 }
 
 class _SplashHomeState extends State<SplashHome> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
-      Timer(Duration(seconds: 4), () {
+    Timer(Duration(seconds: 5), () {
+      // user == null
+      //     ?
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+          // : Navigator.of(context)
+          // .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
     }
     );
     super.initState();
@@ -63,18 +75,18 @@ class _SplashHomeState extends State<SplashHome> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              AppAssets.appLogo,
-              height: 50,
-              width: 50,
+            Lottie.asset(
+              AppAssets.animLogo,
+              // height: 50,
+              // width: 50,
             ),
             SizedBox(
               height: 5,
             ),
-            Text(
-              "Find my Doctor",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-            )
+            // Text(
+            //   "Find my Doctor",
+            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            // )
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

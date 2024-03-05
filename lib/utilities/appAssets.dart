@@ -1,5 +1,6 @@
 class AppAssets{
   static const String appLogo = "assets/icons/splash_logo.png";
+  static const String animLogo = "assets/animation/animSplash.json";
 
   //categories
   static const String firstAid = "assets/images/firstAid.png";

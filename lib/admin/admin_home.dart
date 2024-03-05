@@ -1,6 +1,11 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findmydoc/Utilities/appColors.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 
+import '../firebase_files/firebase_crud.dart';
 import 'addDoctor.dart';
 
 void main() {
@@ -10,9 +15,14 @@ void main() {
   ));
 }
 
-class AdminHome extends StatelessWidget {
+class AdminHome extends StatefulWidget {
   AdminHome({super.key});
 
+  @override
+  State<AdminHome> createState() => _AdminHomeState();
+}
+
+class _AdminHomeState extends State<AdminHome> {
   final daysController = TextEditingController(text: "Last 30 days");
 
   List<String> days = [
@@ -25,10 +35,14 @@ class AdminHome extends StatelessWidget {
   ];
 
   @override
-  // void initState() {
-  //   daysController.text = "Last 30 days";
-  //   super.initState();
-  // }
+  void initState() {
+    //_userCollection = FirebaseFirestore.instance.collection('docData');
+    super.initState();
+  }
+
+ // late CollectionReference _userCollection;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -41,7 +55,7 @@ class AdminHome extends StatelessWidget {
               height: 24,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12),
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -98,11 +112,10 @@ class AdminHome extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            // Wrap the Row with Expanded
                             child: Row(
                               children: [
                                 Container(
-                                  height: 50,
+                                  height: 60,
                                   width: 135,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -135,8 +148,8 @@ class AdminHome extends StatelessWidget {
                                 ),
                                 InkWell(
                                   child: Container(
-                                    height: 50,
-                                    width: 110,
+                                    height: 60,
+                                    width: 80,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black38,
@@ -182,45 +195,69 @@ class AdminHome extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount: 10,
-                            itemBuilder: (context, index) => Card(
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  radius: 30,
-                                    child: Image.asset(
-                                        "assets/images/doc1.jpeg")),
-                                tileColor: Colors.white,
-                                title: Text(
-                                  "Dr. Jithin Jose",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Text(
-                                  "General Physician",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                                trailing: Wrap(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (context) => AddDoctor()));
-                                        },
-                                        icon: Icon(Icons.edit)),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.delete)),
-                                  ],
-                                ),
-                              ),
-                            )),
-                      )
+                      StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseCRUD().readDocData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error ${snapshot.error}'));
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            final users = snapshot.data!.docs;
+                            return Expanded(
+                              child: ListView.builder(
+                                  itemCount: users.length,
+                                  itemBuilder: (context, index) {
+                                    final user = users[index];
+                                    final userId = user.id;
+                                    final name = user["name"];
+                                    final specialisation = user["specialisation"];
+                                    // final phone = user["phone"];
+                                    // final description = user["description"];
+                                    // final yearsExp = user["yearsExp"];
+                                    return Card(
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                            radius: 30,
+                                            child: Image.asset(
+                                                "assets/images/doc1.jpeg")),
+                                        tileColor: Colors.white,
+                                        title: Text(
+                                          "$name",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Text(
+                                          "$specialisation",
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 14),
+                                        ),
+                                        trailing: Wrap(
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pushReplacement(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  AddDoctor()));
+                                                },
+                                                icon: Icon(Icons.edit)),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(Icons.delete)),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            );
+                          }),
                     ],
                   ),
                 ),
@@ -231,4 +268,8 @@ class AdminHome extends StatelessWidget {
       ),
     );
   }
+
+  // Stream<QuerySnapshot> readDocData() {
+  //   return _userCollection.snapshots();
+  // }
 }

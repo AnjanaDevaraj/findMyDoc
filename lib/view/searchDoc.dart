@@ -47,16 +47,18 @@ class SearchDoc extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 10,
+              height: 18,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 12, right: 12,top: 20),
-              child: Text(
-                "Search Doctor",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
+              child: Center(
+                child: Text(
+                  "Search Doctor",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
               ),
             ),
             SizedBox(
@@ -72,7 +74,7 @@ class SearchDoc extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 12,right: 12,top: 20),
+                    padding: const EdgeInsets.only(left: 14,right: 14,top: 24),
                     child: Container(
                       // height: 40,
                       width: double.infinity,
@@ -108,7 +110,7 @@ class SearchDoc extends StatelessWidget {
 
                   ///Location
                   Padding(
-                    padding: EdgeInsets.only(right: 12,left: 12),
+                    padding: EdgeInsets.only(right: 14,left: 14),
                     child: Container(
                       height: 40,
                       width: double.infinity,
@@ -133,7 +135,7 @@ class SearchDoc extends StatelessWidget {
 
                   ///Availibility
                   Padding(
-                    padding: EdgeInsets.only(right: 12,left: 12),
+                    padding: EdgeInsets.only(right: 14,left: 14),
                     child: Container(
                       height: 40,
                       width: double.infinity,
@@ -158,6 +160,7 @@ class SearchDoc extends StatelessWidget {
                   Center(
                     child: MaterialButton(
                         height: 45,
+                        minWidth: 300,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3),
                         ),

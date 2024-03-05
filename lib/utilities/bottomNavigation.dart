@@ -14,10 +14,10 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   @override
   Widget build(BuildContext context) {
     List<BottomNavigationBarItem> items = [
-      _buildNavItem(Icons.home,
+      _buildNavItem(Icons.home_outlined,
           "", 0),
       _buildNavItem(
-          Icons.favorite_border,
+          Icons.favorite_outline,
           "",
           1),
       _buildNavItem(
@@ -25,7 +25,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           "",
           2),
       _buildNavItem(
-          Icons.person,
+          Icons.person_outline,
           "",
           3),
     ];
